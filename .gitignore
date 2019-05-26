@@ -2,7 +2,9 @@
 .git
 .idea/
 __pycache__
+
+
 resources/dataset
 *.vec
-dic*.pkl
-resources/embeddings.vec
+coverage*.pkl
+precision*.pkl
