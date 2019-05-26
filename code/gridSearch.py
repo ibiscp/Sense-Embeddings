@@ -1,14 +1,26 @@
 from sklearn.model_selection import ParameterGrid
 import tensorflow.keras as K
+from gensim.models.callbacks import CallbackAny2Vec
+from tqdm import tqdm
 import random
 import numpy as np
+
+class EpochLogger(CallbackAny2Vec):
+    '''Callback to log information about training'''
+
+    def __init__(self, total_epochs):
+        self.epoch = 0
+        self.pbar = tqdm(total=total_epochs)
+
+    def on_epoch_end(self, model):
+        self.epoch += 1
+        self.pbar.update(1)
 
 class gridSearch:
 
     def __init__(self, build_fn, param_grid, vocab_size, sentence_size):
-        self.build_fn = build_fn
         self.param_grid = param_grid
-        self.best_score = 0.8517
+        self.best_score = 0
         self.best_params = None
         self.results = []
         self.vocab_size = vocab_size

@@ -2,8 +2,4 @@
 .git
 .idea/
 __pycache__
-dataset/eurosense.v1.0.high-coverage.xml
-dataset/LICENSE.txt
-dataset/README.txt
-dataset/wordsim353
-dataset/dictionary*.pkl
+resources/dataset

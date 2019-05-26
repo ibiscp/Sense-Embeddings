@@ -24,10 +24,10 @@ def create_mapping(filepath="../resources/bn2wn_mapping.txt"):
 
             mapping[map[0]] = map[1]
 
-    save(mapping, '../dataset/mapping')
+    save(mapping, '../resources/mapping')
     return mapping
 
-def create_dictionary(file="../dataset/eurosense.v1.0.high-coverage.xml"):
+def create_dictionary(file="../resources/dataset/eurosense.v1.0.high-coverage.xml"):
     dictionary = {}
 
     # get an iterable
@@ -64,10 +64,10 @@ def create_dictionary(file="../dataset/eurosense.v1.0.high-coverage.xml"):
 
         root.clear()
 
-    save(dictionary, '../dataset/dictionary')
+    save(dictionary, '../resources/dictionary')
     return dictionary
 
-def load_data(path="../dataset/", dictionary_name='dictionary2', mapping_name='mapping'):
+def load_data(path="../resources/", dictionary_name='dictionary2', mapping_name='mapping'):
 
     # Check if dictionary exists
     if glob.glob(path + dictionary_name + '.pkl'):

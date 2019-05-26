@@ -39,11 +39,18 @@ if __name__ == '__main__':
     # Number of cores
     cores = multiprocessing.cpu_count()
 
+    # Load sentences
+    sentences = load_data(dictionary_name='dictionary')
+
+    # # Define the grid search parameters
+    # epochs = [5, 10, 20]
+    # negative = [0, 5, 10]
+    # window = [3, 5]
+    # embedding_size = [100, 200, 300]
+    # param_grid = dict(epochs=epochs, negative=negative, window=window, embedding_size=embedding_size)
+
     # Epoch logger
     epoch_logger = EpochLogger(5)
-
-    # Load sentences
-    sentences = load_data()
 
     # Model
     model = Word2Vec(sentences,
@@ -58,24 +65,10 @@ if __name__ == '__main__':
                      iter=5,
                      callbacks=[epoch_logger])
 
-    # # Build vocabulary
-    # t = time()
-    # model.build_vocab(sentences, progress_per=100)
-    # print('Time to build vocab: {} mins'.format(round((time() - t) / 60, 2)))
+    model.wv.save_word2vec_format("../resources/model.bin")
+    model.wv.save_word2vec_format("../resources/model.txt", binary=False)
 
     # Train
-    # model.train(sentences, total_examples=model.corpus_count, epochs=100, report_delay=1)
-    # model.train()
-
-
-    # # Define the grid search parameters
-    # epochs = [5, 10, 20]
-    # negative = [0, 5, 10]
-    # window = [3, 5]
-    # embedding_size = [100, 200, 300]
-    # param_grid = dict(batchSize=batchSize, epochs=epochs, embedding_size=embedding_size)
-    #
-    # # Train
     # grid = gridSearch(build_fn=model, param_grid=param_grid, vocab_size=vocabulary_size, sentence_size=sentenceSize)
     # grid.fit(train_x, train_y, dev_x, dev_y)
 
