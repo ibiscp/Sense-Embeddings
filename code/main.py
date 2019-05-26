@@ -1,62 +1,83 @@
-import xml.etree.cElementTree as etree
-#import cElementTree as ElementTree
-import pickle
+# from time import time
+from preprocess import load_data
+from gensim.models.callbacks import CallbackAny2Vec
+from gensim.models import Word2Vec
+import multiprocessing
+from argparse import ArgumentParser
+# import logging
+from tqdm import tqdm
 
-# Save dictionary to file
-def save(obj, name):
-    with open(name + '.pkl', 'wb') as f:
-        pickle.dump(obj, f)
+def parse_args():
+    parser = ArgumentParser()
+    parser.add_argument("resources_path", nargs='?', default='../resources/', help="The path of the resources needed to load your model")
+    parser.add_argument("sentence_size", nargs='?', const=626, type=int, default=626, help="The size of the maximum sentence")
 
-# Load dictionary from file
-def load(name):
-    with open(name + '.pkl', 'rb') as f:
-        return pickle.load(f)
+    return parser.parse_args()
+
+class EpochLogger(CallbackAny2Vec):
+    '''Callback to log information about training'''
+
+    def __init__(self, total_epochs):
+        self.epoch = 0
+        # self.time = None
+        self.pbar = tqdm(total=total_epochs)
+
+    # def on_epoch_begin(self, model):
+    #     self.time = time()
+
+    def on_epoch_end(self, model):
+        #print("Epoch {} - {}".format(self.epoch, round((time() - self.time) / 60, 2)))
+        self.epoch += 1
+        self.pbar.update(1)
+
+if __name__ == '__main__':
+    args = parse_args()
+
+    # Logging
+    # logging.basicConfig(format='%(asctime)s: %(levelname)s: %(message)s', level=logging.INFO)
+
+    # Number of cores
+    cores = multiprocessing.cpu_count()
+
+    # Epoch logger
+    epoch_logger = EpochLogger(5)
+
+    # Load sentences
+    sentences = load_data()
+
+    # Model
+    model = Word2Vec(sentences,
+                     min_count=5,
+                     window=5,
+                     size=100,
+                     sample=6e-5,
+                     alpha=0.03,
+                     min_alpha=0.0007,
+                     negative=20,
+                     workers=cores - 1,
+                     iter=5,
+                     callbacks=[epoch_logger])
+
+    # # Build vocabulary
+    # t = time()
+    # model.build_vocab(sentences, progress_per=100)
+    # print('Time to build vocab: {} mins'.format(round((time() - t) / 60, 2)))
+
+    # Train
+    # model.train(sentences, total_examples=model.corpus_count, epochs=100, report_delay=1)
+    # model.train()
 
 
-def load_data(file="../dataset/eurosense.v1.0.high-coverage.xml"):
+    # # Define the grid search parameters
+    # epochs = [5, 10, 20]
+    # negative = [0, 5, 10]
+    # window = [3, 5]
+    # embedding_size = [100, 200, 300]
+    # param_grid = dict(batchSize=batchSize, epochs=epochs, embedding_size=embedding_size)
+    #
+    # # Train
+    # grid = gridSearch(build_fn=model, param_grid=param_grid, vocab_size=vocabulary_size, sentence_size=sentenceSize)
+    # grid.fit(train_x, train_y, dev_x, dev_y)
 
-    dictionary = {}
-    dictionary_number = 0
-    save_every = 100000
-
-    # get an iterable
-    context = etree.iterparse(file, events=['start'])
-
-    # turn it into an iterator
-    context = iter(context)
-
-    # get the root element
-    event, root = context.__next__()
-
-    for event, elem in context:
-        if event == 'start':
-            if elem.tag == "sentence":
-                id = elem.attrib["id"]
-
-                # if int(id) % save_every == save_every-1:
-                #     save(dictionary, '../dataset/dictionary_' + str(dictionary_number))
-                #     dictionary = {}
-                #     dictionary_number += 1
-                dictionary[id] = {}
-                if int(id) % 1000 == 0:
-                    print(id)
-
-            if elem.tag == "text" and elem.attrib["lang"] == "en":
-                text = elem.text
-                dictionary[id]["text"] = text
-                dictionary[id]["annotations"] = {}
-            elif elem.tag == "annotation" and elem.attrib["lang"] == "en":
-                annotation = {}
-                #annotation["type"] = elem.attrib["type"]
-                annotation["anchor"] = elem.attrib["anchor"]
-                annotation["lemma"] = elem.attrib["lemma"]
-                annotation["coherenceScore"] = elem.attrib["coherenceScore"]
-                #annotation["nasariScore"] = elem.attrib["nasariScore"]
-                annotation["babelnet"] = elem.text
-                dictionary[id]["annotations"][annotation["lemma"]] = annotation
-
-            root.clear()
-
-    save(dictionary, '../dataset/dictionary')
-
-load_data()
+    # Print grid search summary
+    # grid.summary()
