@@ -27,10 +27,11 @@ def create_mapping(filepath="../resources/bn2wn_mapping.txt"):
     save(mapping, '../resources/mapping')
     return mapping
 
-def create_dictionary(file="../resources/dataset/eurosense.v1.0.high-coverage.xml"):
+def create_dictionary(dic_name='coverage'):
     dictionary = {}
 
     # get an iterable
+    file = '../resources/dataset/eurosense.v1.0.high-' + dic_name + '.xml'
     context = etree.iterparse(file, events=['start', 'end'])
 
     # turn it into an iterator
@@ -64,7 +65,7 @@ def create_dictionary(file="../resources/dataset/eurosense.v1.0.high-coverage.xm
 
         root.clear()
 
-    save(dictionary, '../resources/dictionary')
+    save(dictionary, '../resources/', dic_name)
     return dictionary
 
 def load_data(path="../resources/", dictionary_name='dictionary2', mapping_name='mapping'):
@@ -108,7 +109,7 @@ def load_data(path="../resources/", dictionary_name='dictionary2', mapping_name=
         sentences.append(sentence)
 
     # Print sample sentences
-    print('\nSample sentences\n')
+    print('\nSample sentences')
     for i in sentences[0:10]:
         print(i)
 

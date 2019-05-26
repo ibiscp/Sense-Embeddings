@@ -1,11 +1,7 @@
 # from time import time
 from preprocess import load_data
-from gensim.models.callbacks import CallbackAny2Vec
-from gensim.models import Word2Vec
-import multiprocessing
 from argparse import ArgumentParser
-# import logging
-from tqdm import tqdm
+from gridSearch import *
 
 def parse_args():
     parser = ArgumentParser()
@@ -14,63 +10,23 @@ def parse_args():
 
     return parser.parse_args()
 
-class EpochLogger(CallbackAny2Vec):
-    '''Callback to log information about training'''
-
-    def __init__(self, total_epochs):
-        self.epoch = 0
-        # self.time = None
-        self.pbar = tqdm(total=total_epochs)
-
-    # def on_epoch_begin(self, model):
-    #     self.time = time()
-
-    def on_epoch_end(self, model):
-        #print("Epoch {} - {}".format(self.epoch, round((time() - self.time) / 60, 2)))
-        self.epoch += 1
-        self.pbar.update(1)
-
 if __name__ == '__main__':
     args = parse_args()
-
-    # Logging
-    # logging.basicConfig(format='%(asctime)s: %(levelname)s: %(message)s', level=logging.INFO)
-
-    # Number of cores
-    cores = multiprocessing.cpu_count()
 
     # Load sentences
     sentences = load_data(dictionary_name='dictionary')
 
-    # # Define the grid search parameters
-    # epochs = [5, 10, 20]
-    # negative = [0, 5, 10]
-    # window = [3, 5]
-    # embedding_size = [100, 200, 300]
-    # param_grid = dict(epochs=epochs, negative=negative, window=window, embedding_size=embedding_size)
-
-    # Epoch logger
-    epoch_logger = EpochLogger(5)
-
-    # Model
-    model = Word2Vec(sentences,
-                     min_count=5,
-                     window=5,
-                     size=100,
-                     sample=6e-5,
-                     alpha=0.03,
-                     min_alpha=0.0007,
-                     negative=20,
-                     workers=cores - 1,
-                     iter=5,
-                     callbacks=[epoch_logger])
-
-    model.wv.save_word2vec_format("../resources/model.bin")
-    model.wv.save_word2vec_format("../resources/model.txt", binary=False)
+    # Define the grid search parameters
+    epochs = [5, 10, 20]
+    negative = [0, 5, 10]
+    window = [3, 5]
+    embedding_size = [100, 200, 300]
+    min_count = [5, 10]
+    param_grid = dict(epochs=epochs, negative=negative, window=window, embedding_size=embedding_size, min_count=min_count)
 
     # Train
-    # grid = gridSearch(build_fn=model, param_grid=param_grid, vocab_size=vocabulary_size, sentence_size=sentenceSize)
-    # grid.fit(train_x, train_y, dev_x, dev_y)
+    grid = gridSearch(sentences=sentences, param_grid=param_grid)
+    grid.fit()
 
     # Print grid search summary
-    # grid.summary()
+    grid.summary()
