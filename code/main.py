@@ -17,10 +17,10 @@ if __name__ == '__main__':
     sentences = load_data(dictionary_name='dictionary')
 
     # Define the grid search parameters
-    epochs = [5, 10, 20]
-    negative = [0, 5, 10]
+    epochs = [5, 10]
+    negative = [5, 10]
     window = [3, 5]
-    embedding_size = [100, 200, 300]
+    embedding_size = [100, 300]
     min_count = [5, 10]
     param_grid = dict(epochs=epochs, negative=negative, window=window, embedding_size=embedding_size, min_count=min_count)
 
