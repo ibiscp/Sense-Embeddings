@@ -1,9 +1,5 @@
 from sklearn.model_selection import ParameterGrid
-import tensorflow.keras as K
 from gensim.models.callbacks import CallbackAny2Vec
-from tqdm import tqdm
-import random
-import numpy as np
 import multiprocessing
 from gensim.models import Word2Vec
 from score import score

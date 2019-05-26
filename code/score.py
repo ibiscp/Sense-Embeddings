@@ -6,34 +6,35 @@ from preprocess import load, save
 
 def parse_args():
     parser = ArgumentParser()
-    parser.add_argument("prediction_file", nargs='?',
-                        default='../resources/dataset/predicted/cityu_test_gold_prediction.txt',
-                        help="The path to the prediction file (in BIES format)")
-    parser.add_argument("gold_file", nargs='?', default='../resources/dataset/predicted/cityu_test_gold.txt',
-                        help="The path to the gold file (in BIES format)")
+    parser.add_argument("resource_folder", nargs='?', default='../resources/', help="Resource folder path")
+    parser.add_argument("gold_file", nargs='?', default='combined.tab', help="Name of the gold file to use")
+    parser.add_argument("model_name", nargs='?', default='embeddings.vec', help="Name of the embedding file to use")
 
     return parser.parse_args()
 
 
-def score(gold_path='../resources/', gold_file='combined.tab', model=None):
+def score(resource_folder='../resources/', gold_file='combined.tab', model_name='embeddings.vec', model=None):
 
     # Read gold file to a list
     word_pairs = []
     gold = []
-    with open(gold_path + gold_file) as f:
+    with open(resource_folder + gold_file) as f:
         next(f)
         for line in f:
             fields = line.split('\t')
             word_pairs.append([fields[0].lower(), fields[1].lower()])
             gold.append(float(fields[2]))
 
+    # Load the model and get vocabulary
+    if model is None:
+        model = KeyedVectors.load_word2vec_format(resource_folder + model_name, binary=False)
+
     # Check if dictionary exists
-    if glob.glob(gold_path + 'gold' + '.pkl'):
-        gold_dic = load(gold_path + 'gold')
+    if glob.glob(resource_folder + 'gold' + '.pkl'):
+        gold_dic = load(resource_folder + 'gold')
     else:
-        # Load the model and get vocabulary
-        if model is None:
-            model = KeyedVectors.load_word2vec_format(gold_path + 'embeddings.vec', binary=False)
+
+        # Get vocabulary from model
         vocab = model.wv.vocab
 
         # Distinct words in gold
@@ -54,7 +55,7 @@ def score(gold_path='../resources/', gold_file='combined.tab', model=None):
                     gold_dic[k_] = [k]
 
         # Save dictionary
-        save(gold_dic, gold_path + 'gold')
+        save(gold_dic, resource_folder + 'gold')
 
     # Calculate cossine similarity
     cossine = []
@@ -89,7 +90,7 @@ if __name__ == '__main__':
     args = parse_args()
 
     # Calculate correlation
-    corr = score(gold_path='../resources/', gold_file='combined.tab')
+    corr = score(resource_folder=args.resource_folder, gold_file=args.gold_file, model_name=args.model_name)
 
     print("Final Score:\t", corr)
 

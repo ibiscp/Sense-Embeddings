@@ -5,8 +5,7 @@ from gridSearch import *
 
 def parse_args():
     parser = ArgumentParser()
-    parser.add_argument("resources_path", nargs='?', default='../resources/', help="The path of the resources needed to load your model")
-    parser.add_argument("sentence_size", nargs='?', const=626, type=int, default=626, help="The size of the maximum sentence")
+    parser.add_argument("dictionary_name", nargs='?', default='precision', help="Name of the dictionary file to use")
 
     return parser.parse_args()
 
@@ -14,7 +13,7 @@ if __name__ == '__main__':
     args = parse_args()
 
     # Load sentences
-    sentences = load_data(dictionary_name='dictionary')
+    sentences = load_data(dictionary_name=args.dictionary_name)
 
     # Define the grid search parameters
     epochs = [5, 10]
