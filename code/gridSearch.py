@@ -46,7 +46,7 @@ class gridSearch:
                              alpha=0.03,
                              min_alpha=0.0007,
                              negative=g['negative'],
-                             workers=self.cores - 1,
+                             workers=self.cores,
                              iter=g['epochs'],
                              callbacks=[epoch_logger])
 
