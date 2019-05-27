@@ -3,6 +3,7 @@ from gensim.models.callbacks import CallbackAny2Vec
 import multiprocessing
 from gensim.models import Word2Vec
 from score import score
+import tensorflow.keras as K
 
 class EpochLogger(CallbackAny2Vec):
     '''Callback to log information about training'''
@@ -10,11 +11,9 @@ class EpochLogger(CallbackAny2Vec):
     def __init__(self, total_epochs):
         self.epoch = 0
         self.total = total_epochs
-        #self.pbar = tqdm(total=total_epochs)
 
     def on_epoch_end(self, model):
         self.epoch += 1
-        #self.pbar.update(1)
         print('\tEpoch', self.epoch, '/', self.total)
 
 class gridSearch:

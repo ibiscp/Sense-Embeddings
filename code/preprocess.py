@@ -78,9 +78,9 @@ def create_dictionary(dic_name='precision'):
 def load_data(dictionary_name, path="../resources/", mapping_name='mapping'):
 
     # Check if sentences exists
-    if glob.glob(path + dictionary_name + '_sentences.pkl'):
+    if glob.glob(path + dictionary_name + '_sentences' + '.pkl'):
         print('\nSentences found!')
-        sentences = load(path + dictionary_name + '_sentences.pkl')
+        sentences = load(path + dictionary_name + '_sentences')
     else:
         # Check if dictionary exists
         if glob.glob(path + dictionary_name + '.pkl'):
