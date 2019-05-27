@@ -19,7 +19,7 @@ if __name__ == '__main__':
     epochs = [5, 10]
     negative = [0, 5]
     window = [3, 5]
-    embedding_size = [100, 300]
+    embedding_size = [200, 400]
     min_count = [5, 10]
     param_grid = dict(epochs=epochs, negative=negative, window=window, embedding_size=embedding_size, min_count=min_count)
 

@@ -21,6 +21,7 @@ class gridSearch:
     def __init__(self, sentences, param_grid):
         self.param_grid = param_grid
         self.best_score = -10
+        self.best_loss = 0
         self.best_params = None
         self.results = []
         self.sentences = sentences
@@ -48,20 +49,24 @@ class gridSearch:
                              negative=g['negative'],
                              workers=self.cores,
                              iter=g['epochs'],
+                             compute_loss=True,
                              callbacks=[epoch_logger])
 
-            corr = score(model=model)
-            print('\tScore: %f' % (corr))
+            loss = model.get_latest_training_loss()
 
-            self.results.append({'corr':corr, 'params':g})
+            corr = score(model=model)
+            print('\tScore: %f Loss: %f' % (corr, loss))
+
+            self.results.append({'corr':corr, 'loss':loss, 'params':g})
 
             # Write to results
             with open('../resources/results.txt', "a+") as f:
-                f.write("Correlation: %f - Parameters: %r\n" % (corr, g))
+                f.write("Correlation: %f Loss: %f - Parameters: %r\n" % (corr, loss, g))
 
             if corr > self.best_score:
                 self.best_score = corr
                 self.best_params = g
+                self.best_loss = loss
 
                 # Save model
                 print("\tSaving model")
@@ -72,7 +77,7 @@ class gridSearch:
                 with open("../resources/results.txt") as f:
                     lines = f.readlines()
 
-                lines[0] = "Best: " + str(self.best_score) + " using " + str(self.best_params)
+                lines[0] = "Best -> Correlation: " + str(self.best_score) + "Loss: " + str(self.best_loss) + " using " + str(self.best_params)
 
                 with open("../resources/results.txt", "w+") as f:
                     f.writelines(lines)
@@ -80,6 +85,6 @@ class gridSearch:
     def summary(self):
         # Summarize results
         print('\nSummary')
-        print("Best: %f using %s" % (self.best_score, self.best_params))
+        print("Best -> Correlation: %f Loss: %f using %s" % (self.best_score, self.best_loss, self.best_params))
         for res in self.results:
-            print("Correlation: %f - Parameters: %r" % (res['corr'], res['params']))
+            print("Correlation: %f Loss: %f - Parameters: %r" % (res['corr'], res['loss'], res['params']))

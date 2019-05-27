@@ -53,8 +53,8 @@ def create_dictionary(dic_name='precision'):
         if elem.tag == "sentence" and event == 'start':
             id = elem.attrib["id"]
 
-            if int(id) % 1000 == 0 and int(id) != 0:
-                print(id)
+            if int(id) % 100000 == 0 and int(id) != 0:
+                print('\tSentences read: ', id)
 
             dictionary[id] = {}
 
