@@ -13,7 +13,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def score(resource_folder='../resources/', gold_file='combined.tab', model_name='embeddings.vec', model=None):
+def score(resource_folder='../resources/', gold_file='combined.tab', model_name='embeddings.vec', model=None,  debug=False):
 
     # Read gold file to a list
     word_pairs = []
@@ -58,6 +58,7 @@ def score(resource_folder='../resources/', gold_file='combined.tab', model_name=
         save(gold_dic, resource_folder + 'gold')
 
     # Calculate cossine similarity
+    none = 0
     cossine = []
     for tuple in word_pairs:
         word1 = tuple[0]
@@ -70,6 +71,7 @@ def score(resource_folder='../resources/', gold_file='combined.tab', model_name=
         except:
             word1_list = []
             word2_list = []
+            none += 1
 
         # Get similarities
         sim = [-1]
@@ -79,6 +81,9 @@ def score(resource_folder='../resources/', gold_file='combined.tab', model_name=
 
         # Maximum similarity
         cossine.append(max(sim))
+
+    if debug:
+        print('\nPairs not found: ' + str(none) + " ({:.2%})".format(none / len(word_pairs)))
 
     # Spearman correlation
     corr, _ = spearmanr(gold, cossine)
@@ -90,7 +95,6 @@ if __name__ == '__main__':
     args = parse_args()
 
     # Calculate correlation
-    corr = score(resource_folder=args.resource_folder, gold_file=args.gold_file, model_name=args.model_name)
+    corr = score(resource_folder=args.resource_folder, gold_file=args.gold_file, model_name=args.model_name, debug=True)
 
     print("Final Score:\t", corr)
-

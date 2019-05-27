@@ -8,3 +8,4 @@ resources/dataset
 *.vec
 coverage*.pkl
 precision*.pkl
+dictionary*.pkl

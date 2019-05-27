@@ -1,1 +1,0 @@
-Best: -0.15466565024901013 using {'embedding_size': 100, 'epochs': 1, 'min_count': 5, 'negative': 0, 'window': 3}Correlation: -0.154666 - Parameters: {'embedding_size': 100, 'epochs': 1, 'min_count': 5, 'negative': 0, 'window': 3}
