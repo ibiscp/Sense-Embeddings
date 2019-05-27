@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 def parse_args():
     parser = ArgumentParser()
     parser.add_argument("resource_folder", nargs='?', default='../resources/', help="Resource folder path")
-    parser.add_argument("dictionary_name", nargs='?', default='coverage', help="Name of the dictionary file to use")
+    parser.add_argument("dictionary_name", nargs='?', default='precision', help="Name of the dictionary file to use")
     parser.add_argument("mapping_name", nargs='?', default='mapping', help="Name of the mapping file to use")
 
     return parser.parse_args()

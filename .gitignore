@@ -9,3 +9,4 @@ resources/dataset
 coverage*.pkl
 precision*.pkl
 dictionary*.pkl
+gold.pkl
