@@ -55,7 +55,7 @@ def score(resource_folder='../resources/', gold_file='combined.tab', model_name=
                     gold_dic[k_] = [k]
 
         # Save dictionary
-        save(gold_dic, resource_folder + 'gold')
+        # save(gold_dic, resource_folder + 'gold')
 
     # Calculate cossine similarity
     none = 0
