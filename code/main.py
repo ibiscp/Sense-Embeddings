@@ -1,4 +1,3 @@
-# from time import time
 from preprocess import load_data
 from argparse import ArgumentParser
 from gridSearch import *
@@ -16,8 +15,8 @@ if __name__ == '__main__':
     sentences = load_data(dictionary_name=args.dictionary_name)
 
     # Define the grid search parameters
-    epochs = [20, 30]
-    negative = [10, 15]
+    epochs = [30]
+    negative = [10]
     window = [5]
     embedding_size = [500]
     min_count = [5]

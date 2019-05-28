@@ -1,19 +1,17 @@
 from argparse import ArgumentParser
 from gensim.models import KeyedVectors
 from scipy.stats import spearmanr
-import glob
-from preprocess import load, save
 
 def parse_args():
     parser = ArgumentParser()
     parser.add_argument("resource_folder", nargs='?', default='../resources/', help="Resource folder path")
     parser.add_argument("gold_file", nargs='?', default='combined.tab', help="Name of the gold file to use")
-    parser.add_argument("model_name", nargs='?', default='embeddings.vec', help="Name of the embedding file to use")
+    parser.add_argument("model_name", nargs='?', default='embeddings_total.vec', help="Name of the embedding file to use")
 
     return parser.parse_args()
 
 
-def score(resource_folder='../resources/', gold_file='combined.tab', model_name='embeddings.vec', model=None,  debug=False):
+def score(resource_folder='../resources/', gold_file='combined.tab', model_name='embeddings_total.vec', model=None,  debug=False):
 
     # Read gold file to a list
     word_pairs = []
@@ -29,33 +27,25 @@ def score(resource_folder='../resources/', gold_file='combined.tab', model_name=
     if model is None:
         model = KeyedVectors.load_word2vec_format(resource_folder + model_name, binary=False)
 
-    # Check if dictionary exists
-    if glob.glob(resource_folder + 'gold' + '.pkl'):
-        gold_dic = load(resource_folder + 'gold')
-    else:
+    # Get vocabulary from model
+    vocab = model.wv.vocab
 
-        # Get vocabulary from model
-        vocab = model.wv.vocab
+    # Distinct words in gold
+    distinct = []
+    for tuple in word_pairs:
+        for word in tuple:
+            if word not in distinct:
+                distinct.append(word)
 
-        # Distinct words in gold
-        distinct = []
-        for tuple in word_pairs:
-            for word in tuple:
-                if word not in distinct:
-                    distinct.append(word)
-
-        # Search gold in model
-        gold_dic = {}
-        for k in vocab.keys():
-            k_ = k.split('_')[0]
-            if k_ in distinct:
-                try:
-                    gold_dic[k_].append(k)
-                except:
-                    gold_dic[k_] = [k]
-
-        # Save dictionary
-        # save(gold_dic, resource_folder + 'gold')
+    # Search gold in model
+    gold_dic = {}
+    for k in vocab.keys():
+        k_ = k.split('_')[0]
+        if k_ in distinct:
+            try:
+                gold_dic[k_].append(k)
+            except:
+                gold_dic[k_] = [k]
 
     # Calculate cossine similarity
     none = 0

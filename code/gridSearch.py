@@ -64,7 +64,7 @@ class gridSearch:
 
                 # Save model
                 print("\tSaving model")
-                model.wv.save_word2vec_format("../resources/embeddings.vec", binary=False)
+                model.wv.save_word2vec_format("../resources/embeddings_total.vec", binary=False)
 
                 # Substitute
                 with open("../resources/results.txt") as f:

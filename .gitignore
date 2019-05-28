@@ -4,5 +4,5 @@
 __pycache__
 
 resources/dataset
-embeddings.vec
+embeddings_total.vec
 *.pkl
