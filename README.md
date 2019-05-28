@@ -8,6 +8,11 @@ For the correlation evaluation, the dataset [WordSimilarity-353](http://www.cs.t
 
 The training was done using a Google Compute Engine instance running a Tesla K80 GPU.
 
+<p align="center">
+<img src="report/pca.png" width="800"/></br>
+<i>Dimensionality reduction of the 40 words of the BabelNet synset with the highest number of samples</i>
+</p>
+
 ## Instructions
 
 * Generate dictionary
