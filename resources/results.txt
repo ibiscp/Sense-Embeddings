@@ -1,4 +1,4 @@
-Best -> Correlation: 0.32463336276391624 using {'window': 5, 'embedding_size': 400, 'negative': 10, 'min_count': 5, 'epochs': 20}
+Best -> Correlation: 0.331705262699599 using {'negative': 10, 'window': 5, 'min_count': 5, 'epochs': 30, 'embedding_size': 500}
 
 # Training 1
 Correlation: -0.138295 - Parameters: {'min_count': 5, 'window': 3, 'embedding_size': 200, 'epochs': 5, 'negative': 0}
@@ -69,3 +69,7 @@ Correlation: 0.323576 - Parameters: {'window': 5, 'embedding_size': 600, 'negati
 Correlation: 0.319772 - Parameters: {'window': 7, 'embedding_size': 600, 'negative': 10, 'min_count': 5, 'epochs': 20}
 
 #Training 3
+Correlation: 0.326934 - Parameters: {'negative': 10, 'window': 5, 'min_count': 5, 'epochs': 20, 'embedding_size': 500}
+Correlation: 0.321759 - Parameters: {'negative': 15, 'window': 5, 'min_count': 5, 'epochs': 20, 'embedding_size': 500}
+Correlation: 0.331705 - Parameters: {'negative': 10, 'window': 5, 'min_count': 5, 'epochs': 30, 'embedding_size': 500}
+Correlation: 0.325737 - Parameters: {'negative': 15, 'window': 5, 'min_count': 5, 'epochs': 30, 'embedding_size': 500}
