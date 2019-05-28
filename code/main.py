@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
     # Define the grid search parameters
     epochs = [5]
-    negative = [0, 0]
+    negative = [0, 5]
     window = [3, 5]
     embedding_size = [200]
     min_count = [5, 10]

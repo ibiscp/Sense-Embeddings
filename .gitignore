@@ -5,7 +5,7 @@ __pycache__
 
 
 resources/dataset
-*.vec
+embeddings.vec
 coverage*.pkl
 precision*.pkl
 dictionary*.pkl
