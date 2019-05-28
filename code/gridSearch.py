@@ -14,7 +14,7 @@ class EpochLogger(CallbackAny2Vec):
 
     def on_epoch_end(self, model):
         self.epoch += 1
-        print('\tEpoch', self.epoch, '/', self.total)
+        print('\tEpoch', str(self.epoch) + '/' + str(self.total))
 
 class gridSearch:
 
@@ -70,7 +70,7 @@ class gridSearch:
                 with open("../resources/results.txt") as f:
                     lines = f.readlines()
 
-                lines[0] = "Best -> Correlation: " + str(self.best_score) + " using " + str(self.best_params)
+                lines[0] = "Best -> Correlation: " + str(self.best_score) + " using " + str(self.best_params) + "\n\n"
 
                 with open("../resources/results.txt", "w+") as f:
                     f.writelines(lines)
