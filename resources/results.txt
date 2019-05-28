@@ -1,4 +1,7 @@
-Best -> Correlation: 0.32463336276391624 using {'window': 5, 'embedding_size': 400, 'negative': 10, 'min_count': 5, 'epochs': 20}Correlation: -0.216594 Loss: 0.000000 - Parameters: {'min_count': 5, 'window': 3, 'embedding_size': 400, 'epochs': 5, 'negative': 0}
+Best -> Correlation: 0.24495822508208867 using {'epochs': 5, 'min_count': 5, 'window': 5, 'embedding_size': 200, 'negative': 5}
+
+
+
 Correlation: -0.216594 Loss: 0.000000 - Parameters: {'min_count': 5, 'window': 5, 'embedding_size': 400, 'epochs': 5, 'negative': 0}
 Correlation: 0.188902 Loss: 71090224.000000 - Parameters: {'min_count': 5, 'window': 3, 'embedding_size': 400, 'epochs': 5, 'negative': 5}
 Correlation: 0.228373 Loss: 71140256.000000 - Parameters: {'min_count': 5, 'window': 5, 'embedding_size': 400, 'epochs': 5, 'negative': 5}
@@ -46,3 +49,11 @@ Correlation: 0.303674 - Parameters: {'window': 5, 'embedding_size': 600, 'negati
 Correlation: 0.311366 - Parameters: {'window': 7, 'embedding_size': 600, 'negative': 5, 'min_count': 5, 'epochs': 20}
 Correlation: 0.323576 - Parameters: {'window': 5, 'embedding_size': 600, 'negative': 10, 'min_count': 5, 'epochs': 20}
 Correlation: 0.319772 - Parameters: {'window': 7, 'embedding_size': 600, 'negative': 10, 'min_count': 5, 'epochs': 20}
+Correlation: -0.138295 - Parameters: {'epochs': 5, 'min_count': 5, 'window': 3, 'embedding_size': 200, 'negative': 0}
+Correlation: -0.138295 - Parameters: {'epochs': 5, 'min_count': 5, 'window': 5, 'embedding_size': 200, 'negative': 0}
+Correlation: 0.183216 - Parameters: {'epochs': 5, 'min_count': 5, 'window': 3, 'embedding_size': 200, 'negative': 5}
+Correlation: 0.244958 - Parameters: {'epochs': 5, 'min_count': 5, 'window': 5, 'embedding_size': 200, 'negative': 5}
+Correlation: -0.157774 - Parameters: {'epochs': 5, 'min_count': 10, 'window': 3, 'embedding_size': 200, 'negative': 0}
+Correlation: -0.157774 - Parameters: {'epochs': 5, 'min_count': 10, 'window': 5, 'embedding_size': 200, 'negative': 0}
+Correlation: 0.174623 - Parameters: {'epochs': 5, 'min_count': 10, 'window': 3, 'embedding_size': 200, 'negative': 5}
+Correlation: 0.206890 - Parameters: {'epochs': 5, 'min_count': 10, 'window': 5, 'embedding_size': 200, 'negative': 5}
