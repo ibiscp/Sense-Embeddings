@@ -16,11 +16,11 @@ if __name__ == '__main__':
     sentences = load_data(dictionary_name=args.dictionary_name)
 
     # Define the grid search parameters
-    epochs = [5]
-    negative = [0, 5]
-    window = [3, 5]
-    embedding_size = [200]
-    min_count = [5, 10]
+    epochs = [20, 30]
+    negative = [10, 15]
+    window = [5]
+    embedding_size = [500]
+    min_count = [5]
     param_grid = dict(epochs=epochs, negative=negative, window=window, embedding_size=embedding_size, min_count=min_count)
 
     # Train

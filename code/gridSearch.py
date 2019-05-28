@@ -70,7 +70,7 @@ class gridSearch:
                 with open("../resources/results.txt") as f:
                     lines = f.readlines()
 
-                lines[0] = "Best -> Correlation: " + str(self.best_score) + " using " + str(self.best_params) + "\n\n"
+                lines[0] = "Best -> Correlation: " + str(self.best_score) + " using " + str(self.best_params) + "\n"
 
                 with open("../resources/results.txt", "w+") as f:
                     f.writelines(lines)
